@@ -1,7 +1,9 @@
 package com.javatodev.api;
 
-import com.javatodev.api.model.card.CreditCardEntity;
+import com.javatodev.api.model.bank.account.AccountEntity;
+import com.javatodev.api.model.bank.card.CreditCardEntity;
 import com.javatodev.api.model.user.UserEntity;
+import com.javatodev.api.repository.bank.AccountRepository;
 import com.javatodev.api.repository.bank.CreditCardRepository;
 import com.javatodev.api.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,13 +20,18 @@ class SpringBootMultipleDatasourcesApplicationTests {
     private UserRepository userRepository;
     @Autowired
     private CreditCardRepository creditCardRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
     private static UserEntity user;
     private static CreditCardEntity creditCard;
+    private static AccountEntity account;
 
     @BeforeAll
     public static void initializeDataObjects(){
         creditCard = CreditCardEntity.builder().type("VISA").number("4910 1399 6158 1466").build();
         user = UserEntity.builder().username("JavaToDev").build();
+        account = AccountEntity.builder().number("8884 3499 9993").build();
     }
 
     @Test
@@ -39,6 +46,13 @@ class SpringBootMultipleDatasourcesApplicationTests {
         CreditCardEntity save = creditCardRepository.save(creditCard);
         Optional<CreditCardEntity> creditCardEntity = creditCardRepository.findById(save.getId());
         assert creditCardEntity.isPresent();
+    }
+
+    @Test
+    public void shouldSaveBankAccountToDB () {
+        AccountEntity save = accountRepository.save(account);
+        Optional<AccountEntity> byId = accountRepository.findById(save.getId());
+        assert (byId.isPresent());
     }
 
 

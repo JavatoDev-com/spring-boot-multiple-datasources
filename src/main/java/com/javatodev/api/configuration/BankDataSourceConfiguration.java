@@ -1,6 +1,6 @@
 package com.javatodev.api.configuration;
 
-import com.javatodev.api.model.card.CreditCardEntity;
+import com.javatodev.api.model.bank.card.CreditCardEntity;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.javatodev.api.repository.bank",
-        entityManagerFactoryRef = "cardEntityManagerFactory",
-        transactionManagerRef= "cardTransactionManager")
-public class CreditCardDataSourceConfiguration {
+        entityManagerFactoryRef = "bankEntityManagerFactory",
+        transactionManagerRef= "bankTransactionManager")
+public class BankDataSourceConfiguration {
 
     @Bean
     @ConfigurationProperties("spring.datasource.card")
@@ -34,19 +34,19 @@ public class CreditCardDataSourceConfiguration {
                 .type(BasicDataSource.class).build();
     }
 
-    @Bean(name = "cardEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean cardEntityManagerFactory(
+    @Bean(name = "bankEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean bankEntityManagerFactory(
             EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(cardDataSource())
-                .packages(CreditCardEntity.class)
+                .packages("com.javatodev.api.model.bank")
                 .build();
     }
 
     @Bean
-    public PlatformTransactionManager cardTransactionManager(
-            final @Qualifier("cardEntityManagerFactory") LocalContainerEntityManagerFactoryBean cardEntityManagerFactory) {
-        return new JpaTransactionManager(cardEntityManagerFactory.getObject());
+    public PlatformTransactionManager bankTransactionManager(
+            final @Qualifier("bankEntityManagerFactory") LocalContainerEntityManagerFactoryBean bankEntityManagerFactory) {
+        return new JpaTransactionManager(bankEntityManagerFactory.getObject());
     }
 
 }

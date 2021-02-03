@@ -1,4 +1,4 @@
-package com.javatodev.api.model.card;
+package com.javatodev.api.model.bank.card;
 
 import lombok.*;
 
