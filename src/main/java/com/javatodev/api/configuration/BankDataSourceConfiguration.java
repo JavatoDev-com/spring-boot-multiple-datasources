@@ -1,8 +1,6 @@
 package com.javatodev.api.configuration;
 
-import com.javatodev.api.model.bank.card.CreditCardEntity;
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,13 +21,13 @@ import javax.sql.DataSource;
 public class BankDataSourceConfiguration {
 
     @Bean
-    @ConfigurationProperties("spring.datasource.card")
+    @ConfigurationProperties("spring.datasource.bank")
     public DataSourceProperties cardDataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean
-    @ConfigurationProperties("spring.datasource.card.configuration")
+    @ConfigurationProperties("spring.datasource.bank.configuration")
     public DataSource cardDataSource() {
         return cardDataSourceProperties().initializeDataSourceBuilder()
                 .type(HikariDataSource.class).build();

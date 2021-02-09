@@ -29,9 +29,9 @@ class SpringBootMultipleDatasourcesApplicationTests {
 
     @BeforeAll
     public static void initializeDataObjects(){
-        creditCard = CreditCardEntity.builder().type("VISA").number("4910 1399 6158 1466").build();
+        creditCard = CreditCardEntity.builder().type("VISA").number("4910 0000 0000 0006").build();
         user = UserEntity.builder().username("JavaToDev").build();
-        account = AccountEntity.builder().number("8884 3499 9993").build();
+        account = AccountEntity.builder().number("8884 0000 0002").build();
     }
 
     @Test
